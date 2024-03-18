@@ -1,0 +1,110 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              03/18/2024 14:38:13 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          unsigned char code Code7Seg[] = {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8, 0x80, 0x90};
+   3          #define led_port P0
+   4          sbit led1 = P2^0;
+   5          sbit led2 = P2^1;
+   6          sbit led3 = P2^2;
+   7          sbit led4 = P2^3;
+   8          int dv, chuc, tram, nghin;
+   9          int so=0000;
+  10          
+  11          void delay_ms(unsigned int t){
+  12   1        unsigned int x, y;
+  13   1        for(x=0; x<t; x++){
+  14   2          for(y=0; y<123; y++);
+  15   2        } 
+  16   1      }
+  17          
+  18          void show_led(unsigned int x){
+  19   1        
+  20   1        unsigned int temp;
+  21   1        temp = x;
+  22   1        dv = temp%10;
+  23   1          temp = temp/10;
+  24   1        chuc = temp%10;
+  25   1          temp = temp/10;
+  26   1        tram = temp%10;
+  27   1          temp = temp/10;
+  28   1        nghin = temp%10;
+  29   1          temp = temp/10;
+  30   1        
+  31   1      //  nghin = x/1000;
+  32   1      //  tram = x%1000/100;
+  33   1      //  chuc = x%100/10;
+  34   1      //  dv = x%10;
+  35   1        
+  36   1        led1 = 0;
+  37   1        led2 = 0;
+  38   1        led3 = 0;
+  39   1        led4 = 0;
+  40   1        
+  41   1          led_port = Code7Seg[nghin];
+  42   1          led1 = 0;
+  43   1          delay_ms(1);
+  44   1          led1 = 1;
+  45   1          
+  46   1          led_port = Code7Seg[tram];
+  47   1          led2 = 0;
+  48   1          delay_ms(1);
+  49   1          led2 = 1;
+  50   1          
+  51   1          led_port = Code7Seg[chuc];
+  52   1          led3 = 0;
+  53   1          delay_ms(1);
+  54   1          led3 = 1;
+C51 COMPILER V9.60.7.0   MAIN                                                              03/18/2024 14:38:13 PAGE 2   
+
+  55   1          
+  56   1          led_port = Code7Seg[dv];
+  57   1          led4 = 0;
+  58   1          delay_ms(1);
+  59   1          led4 = 1;
+  60   1      }
+  61          
+  62          
+  63          void main(){
+  64   1        while(1){
+  65   2          
+  66   2          //tang
+  67   2          if(P3_3==0){
+  68   3          so++;
+  69   3          while(P3_3==0);
+  70   3          }
+  71   2          //giam
+  72   2          if(P3_7==0){
+  73   3            if(so==0){
+  74   4            so=9999;
+  75   4            }
+  76   3            else
+  77   3            so--;
+  78   3            while(P3_7==0);
+  79   3          }
+  80   2          show_led(so);
+  81   2        }
+  82   1      
+  83   1      
+  84   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    296    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
